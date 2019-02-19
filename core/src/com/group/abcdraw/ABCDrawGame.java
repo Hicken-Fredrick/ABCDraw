@@ -4,30 +4,58 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.group.abcdraw.ui.BackgroundResource;
 
 public class ABCDrawGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
+
+    private Texture backgroundTexture;
+    private SpriteBatch spriteBatch;
+    private TextureRegion mainBackground;
+    BackgroundResource background;
+
+
+
+    @Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		spriteBatch = new SpriteBatch();
+        background = new BackgroundResource("A_01.jpg", 986, 1300);
+        loadTextures();
+	}
+
+	private void clearScreen(){
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
+	private void loadTextures() {
+		backgroundTexture = new Texture(background.getFileName());
+        mainBackground = new TextureRegion(backgroundTexture, 0, 0, background.getWidth(), background.getHeight());
+  	}
+
+	public void renderBackground() {
+        spriteBatch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getWidth() * background.getRatio());
+		//spriteBatch.draw(backgroundTexture, 0, 0);
+	}
+
+	public void drawStuff() {
+		//TODO Draw other images
 	}
 
 	@Override
-	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void render() {
+	    clearScreen();
+		spriteBatch.begin();
+		renderBackground(); //In first place!!!!
+		drawStuff();
+		spriteBatch.end();
 	}
-	
+
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		backgroundTexture.dispose();
+		spriteBatch.dispose();
 	}
+
 }
