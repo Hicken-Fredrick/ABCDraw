@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.group.abcdraw.ui.BackgroundResource;
 
 public class ABCDrawGame extends ApplicationAdapter {
@@ -15,6 +18,7 @@ public class ABCDrawGame extends ApplicationAdapter {
     private SpriteBatch spriteBatch;
     private TextureRegion mainBackground;
     BackgroundResource background;
+    private Stage stage;
 
 
 
@@ -22,6 +26,12 @@ public class ABCDrawGame extends ApplicationAdapter {
 	public void create () {
 		spriteBatch = new SpriteBatch();
         background = new BackgroundResource("A_01.jpg", 986, 1300);
+        stage = new Stage();
+        Table testTable = new Table();
+        testTable.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("letterImages/uppercaseA.png"))));
+        testTable.setFillParent(true);
+        testTable.setDebug(true);
+        stage.addActor(testTable);
         loadTextures();
 	}
 
@@ -45,11 +55,17 @@ public class ABCDrawGame extends ApplicationAdapter {
 
 	@Override
 	public void render() {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
+        stage.draw();
+        /*
 	    clearScreen();
 		spriteBatch.begin();
 		renderBackground(); //In first place!!!!
 		drawStuff();
 		spriteBatch.end();
+		*/
 	}
 
 	@Override
