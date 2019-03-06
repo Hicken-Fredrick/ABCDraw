@@ -3,7 +3,7 @@ package com.group.abcdraw.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.group.abcdraw.ABCDrawGame;
+import com.group.abcdraw.Navigator;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new ABCDrawGame();
+                return Navigator.getInstance().selectGameScreen();
         }
 }
