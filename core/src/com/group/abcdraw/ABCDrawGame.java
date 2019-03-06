@@ -2,11 +2,13 @@ package com.group.abcdraw;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -19,6 +21,7 @@ public class ABCDrawGame extends ApplicationAdapter {
     private TextureRegion mainBackground;
     BackgroundResource background;
     private Stage stage;
+    ShapeRenderer shapeRenderer;
 
 
 
@@ -33,6 +36,7 @@ public class ABCDrawGame extends ApplicationAdapter {
         testTable.setDebug(true);
         stage.addActor(testTable);
         loadTextures();
+        shapeRenderer = new ShapeRenderer();
 	}
 
 	private void clearScreen(){
@@ -57,8 +61,16 @@ public class ABCDrawGame extends ApplicationAdapter {
 	public void render() {
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.act();
         stage.draw();
+
+        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.circle(175, 650 , 12);
+        shapeRenderer.circle(540, 1450 , 12);
+        shapeRenderer.circle(915, 650 , 12);
+        shapeRenderer.end();
         /*
 	    clearScreen();
 		spriteBatch.begin();
