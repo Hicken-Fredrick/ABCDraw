@@ -72,6 +72,7 @@ public class ABCDrawGame extends ApplicationAdapter implements InputProcessor {
         shapeRenderer.circle(540, 1450 , 12);
         shapeRenderer.circle(915, 650 , 12);
         shapeRenderer.end();
+
         /*
 	    clearScreen();
 		spriteBatch.begin();
