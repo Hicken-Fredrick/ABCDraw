@@ -10,7 +10,7 @@ import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
-import com.group.abcdraw.ui.BackgroundResource;
+import com.group.abcdraw.ui.background.BackgroundResource;
 
 public class MainScreenPresenter {
     private static final MainScreenPresenter ourInstance = new MainScreenPresenter();

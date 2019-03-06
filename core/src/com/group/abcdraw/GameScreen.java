@@ -6,7 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.presenters.MainScreenPresenter;
-import com.group.abcdraw.ui.BackgroundResource;
+import com.group.abcdraw.ui.background.BackgroundFactory;
+import com.group.abcdraw.ui.background.BackgroundResource;
 
 public class GameScreen extends ApplicationAdapter {
 
@@ -16,7 +17,7 @@ public class GameScreen extends ApplicationAdapter {
     @Override
 	public void create () {
 		spriteBatch = new SpriteBatch();
-		presenter.addEvent(new SetBackgroundEvent(new BackgroundResource("A_01.jpg", 986, 1300)));
+		presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter('Z')));
 	}
 
 	//TODO Create event
