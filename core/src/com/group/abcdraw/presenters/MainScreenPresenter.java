@@ -1,5 +1,6 @@
 package com.group.abcdraw.presenters;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +9,7 @@ import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
-import com.group.abcdraw.eventloops.outputevents.DrawBackgroundEvent;
+import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.ui.BackgroundResource;
 
 public class MainScreenPresenter {
@@ -21,9 +22,11 @@ public class MainScreenPresenter {
     private MainScreenPresenter() {
     }
 
-    BackgroundResource background;
+    //For background disposal
     private Texture backgroundTexture;
     private TextureRegion mainBackground;
+    private int mainBackgroundHeight;
+    private int mainBackgroundWidth;
 
     InputEventLoop inputEventLoop = InputEventLoop.getInstance();
     OutputEventLoop outputEventLoop = OutputEventLoop.getInstance();
@@ -38,15 +41,21 @@ public class MainScreenPresenter {
 
         if(!outputEventLoop.isEmpty()) {
             OutputGameEvent outputGameEvent = outputEventLoop.getEvent();
-            if (outputGameEvent instanceof DrawBackgroundEvent) {
+            if (outputGameEvent instanceof SetBackgroundEvent) {
                 //@TODO process
-                background = new BackgroundResource("A_01.jpg", 986, 1300);
+                BackgroundResource background;
+                background = ((SetBackgroundEvent) outputGameEvent).getResource();
                 backgroundTexture = new Texture(background.getFileName());
                 mainBackground = new TextureRegion(backgroundTexture, 0, 0, background.getWidth(), background.getHeight());
+                mainBackgroundWidth = Gdx.graphics.getWidth();
+                mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
             }
         }
+        //Drawing background each tick
+        if (mainBackground != null) spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
     }
 
+    //For background disposal
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }

@@ -3,49 +3,33 @@ package com.group.abcdraw;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.group.abcdraw.eventloops.outputevents.DrawBackgroundEvent;
+import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.ui.BackgroundResource;
 
 public class GameScreen extends ApplicationAdapter {
 
-
     private SpriteBatch spriteBatch;
-
-//    BackgroundResource background;
-//	private Texture backgroundTexture;
-
     MainScreenPresenter presenter = MainScreenPresenter.getInstance();
-
 
     @Override
 	public void create () {
 		spriteBatch = new SpriteBatch();
-		presenter.addEvent(new DrawBackgroundEvent());
-
+		presenter.addEvent(new SetBackgroundEvent(new BackgroundResource("A_01.jpg", 986, 1300)));
 	}
 
+	//TODO Create event
 	private void clearScreen(){
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
-
-	public void drawStuff() {
-		presenter.tick(spriteBatch);
-		//TODO Draw other images
-	}
-
-	@Override
+    @Override
 	public void render() {
 	    clearScreen();
 		spriteBatch.begin();
-
-		//spriteBatch.draw(mainBackground, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getWidth() * background.getRatio());
-		drawStuff();
+		//Draw stuff
+		presenter.tick(spriteBatch);
 		spriteBatch.end();
 	}
 
@@ -54,5 +38,4 @@ public class GameScreen extends ApplicationAdapter {
 		presenter.getBackgroundTexture().dispose();
 		spriteBatch.dispose();
 	}
-
 }
