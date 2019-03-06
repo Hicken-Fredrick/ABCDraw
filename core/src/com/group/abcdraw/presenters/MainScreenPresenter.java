@@ -1,13 +1,12 @@
 package com.group.abcdraw.presenters;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.group.abcdraw.eventloops.GameEvent;
+import com.group.abcdraw.eventloops.InputGameEvent;
 import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
-import com.group.abcdraw.eventloops.Realtime;
+import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.DrawBackgroundEvent;
 import com.group.abcdraw.ui.BackgroundResource;
@@ -31,14 +30,14 @@ public class MainScreenPresenter {
 
     public void tick(SpriteBatch spriteBatch) {
         if(!inputEventLoop.isEmpty()) {
-            GameEvent inputGameEvent = inputEventLoop.getEvent();
+            InputGameEvent inputGameEvent = inputEventLoop.getEvent();
             if (inputGameEvent instanceof ScreenTouchEvent) {
                 //@TODO process screen touches
             }
         }
 
         if(!outputEventLoop.isEmpty()) {
-            GameEvent outputGameEvent = outputEventLoop.getEvent();
+            OutputGameEvent outputGameEvent = outputEventLoop.getEvent();
             if (outputGameEvent instanceof DrawBackgroundEvent) {
                 //@TODO process
                 background = new BackgroundResource("A_01.jpg", 986, 1300);
@@ -50,7 +49,14 @@ public class MainScreenPresenter {
 
     public Texture getBackgroundTexture() {
         return backgroundTexture;
+    }
 
+    public void addEvent(InputGameEvent event){
+        inputEventLoop.add(event);
+    }
+
+    public void addEvent(OutputGameEvent event){
+        outputEventLoop.add(event);
     }
 }
 

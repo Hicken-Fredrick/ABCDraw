@@ -1,7 +1,7 @@
 package com.group.abcdraw.eventloops.outputevents;
 
-import com.group.abcdraw.eventloops.GameEvent;
+import com.group.abcdraw.eventloops.OutputGameEvent;
 
-public class DrawBackgroundEvent extends GameEvent {
+public class DrawBackgroundEvent extends OutputGameEvent {
 
 }

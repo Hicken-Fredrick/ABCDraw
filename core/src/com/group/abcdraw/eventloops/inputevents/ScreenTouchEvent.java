@@ -1,8 +1,8 @@
 package com.group.abcdraw.eventloops.inputevents;
 
-import com.group.abcdraw.eventloops.GameEvent;
+import com.group.abcdraw.eventloops.InputGameEvent;
 
-public class ScreenTouchEvent extends GameEvent {
+public class ScreenTouchEvent extends InputGameEvent {
     int x;
     int y;
 

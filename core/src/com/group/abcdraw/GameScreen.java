@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.group.abcdraw.eventloops.outputevents.DrawBackgroundEvent;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.ui.BackgroundResource;
 
@@ -23,8 +24,8 @@ public class GameScreen extends ApplicationAdapter {
 
     @Override
 	public void create () {
-
 		spriteBatch = new SpriteBatch();
+		presenter.addEvent(new DrawBackgroundEvent());
 
 	}
 

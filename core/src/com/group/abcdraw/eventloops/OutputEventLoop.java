@@ -10,7 +10,7 @@ public class OutputEventLoop implements Realtime {
         return ourInstance;
     }
 
-    Queue<GameEvent> queue = new ArrayBlockingQueue<GameEvent>(20);
+    Queue<OutputGameEvent> queue = new ArrayBlockingQueue<OutputGameEvent>(20);
 
     private OutputEventLoop() {
     }
@@ -20,12 +20,16 @@ public class OutputEventLoop implements Realtime {
 
     }
 
-    public GameEvent getEvent() {
-        if (queue.isEmpty()) throw new RuntimeException(" InputEventLoop Need to check queue not empty before getting events");
+    public OutputGameEvent getEvent() {
+        if (queue.isEmpty()) throw new RuntimeException(" OutputEventLoop Need to check queue not empty before getting events");
         return queue.remove();
     }
 
     public boolean isEmpty(){
         return queue.isEmpty();
+    }
+
+    public void add(OutputGameEvent event) {
+        queue.add(event);
     }
 }
