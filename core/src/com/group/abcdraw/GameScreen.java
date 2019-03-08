@@ -17,7 +17,7 @@ public class GameScreen extends ApplicationAdapter {
     @Override
 	public void create () {
 		spriteBatch = new SpriteBatch();
-		presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter('Z')));
+		presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter('W')));
 	}
 
 	//TODO Create event
