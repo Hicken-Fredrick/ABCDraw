@@ -1,4 +1,4 @@
-package com.group.abcdraw.ui;
+package com.group.abcdraw.ui.background;
 
 public class BackgroundResource {
     String fileName;
