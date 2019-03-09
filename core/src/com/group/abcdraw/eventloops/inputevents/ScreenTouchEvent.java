@@ -3,8 +3,8 @@ package com.group.abcdraw.eventloops.inputevents;
 import com.group.abcdraw.eventloops.InputGameEvent;
 
 public class ScreenTouchEvent extends InputGameEvent {
-    int x;
-    int y;
+    float x;
+    float y;
 
     public ScreenTouchEvent(int x, int y) {
         this.x = x;
@@ -13,5 +13,13 @@ public class ScreenTouchEvent extends InputGameEvent {
 
     private ScreenTouchEvent() {
 
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 }
