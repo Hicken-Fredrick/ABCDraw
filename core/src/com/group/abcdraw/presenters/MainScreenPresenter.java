@@ -1,15 +1,19 @@
 package com.group.abcdraw.presenters;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.group.abcdraw.eventloops.InputGameEvent;
 import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.ui.background.BackgroundResource;
 
 public class MainScreenPresenter {
@@ -31,11 +35,12 @@ public class MainScreenPresenter {
     InputEventLoop inputEventLoop = InputEventLoop.getInstance();
     OutputEventLoop outputEventLoop = OutputEventLoop.getInstance();
 
-    public void tick(SpriteBatch spriteBatch) {
+    public void tick(SpriteBatch spriteBatch , ShapeRenderer shapeRenderer) {
+        //Processing input events
         if(!inputEventLoop.isEmpty()) {
             InputGameEvent inputGameEvent = inputEventLoop.getEvent();
             if (inputGameEvent instanceof ScreenTouchEvent) {
-                //@TODO process screen touches
+                MainScreenModel.getInstance().addTouch(((ScreenTouchEvent) inputGameEvent).getX(), ((ScreenTouchEvent) inputGameEvent).getY());
             }
         }
 
@@ -49,6 +54,7 @@ public class MainScreenPresenter {
                 mainBackground = new TextureRegion(backgroundTexture, 0, 0, background.getWidth(), background.getHeight());
                 mainBackgroundWidth = Gdx.graphics.getWidth();
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
+                if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
             }
         }
         //Drawing background each tick
@@ -66,6 +72,13 @@ public class MainScreenPresenter {
 
     public void addEvent(OutputGameEvent event){
         outputEventLoop.add(event);
+    }
+
+    //Should be called after a sprite batch rendered
+    //Otherwise there will be a black screen instead of background
+    public void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer) {
+        GlobalDraw.drawCircles(spriteBatch, shapeRenderer);
+        GlobalDraw.drawLines(spriteBatch, shapeRenderer);
     }
 }
 
