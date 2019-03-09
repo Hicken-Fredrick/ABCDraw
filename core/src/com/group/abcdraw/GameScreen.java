@@ -19,6 +19,8 @@ import com.group.abcdraw.ui.background.BackgroundResource;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import sun.rmi.runtime.Log;
+
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
     private SpriteBatch spriteBatch;
@@ -48,21 +50,10 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 	    clearScreen();
 		spriteBatch.begin();
 		//Draw stuff
-		presenter.tick(spriteBatch);
+		presenter.tick(spriteBatch, shapeRenderer);
 		spriteBatch.end();
-        shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
-        shapeRenderer.setColor(Color.RED);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (int i = 0; i < touches.size(); i++) {
-            shapeRenderer.circle(touches.get(i).getX(), touches.get(i).getY(), 20);
-        }
-        shapeRenderer.end();
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.BLUE);
-        for (int i = 1; i < touches.size(); i++) {
-            shapeRenderer.line(touches.get(i-1).getX(), touches.get(i-1).getY(), touches.get(i).getX(), touches.get(i).getY());
-        }
-        shapeRenderer.end();
+        //Should be called after a sprite batch rendered
+        presenter.drawShapes(spriteBatch, shapeRenderer);
 	}
 
 	@Override
@@ -100,7 +91,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         else
             letter = 'a';
 
-        touches.add(new ScreenTouchEvent(screenX, screenY));
+        presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
         return true;
     }
 
