@@ -38,6 +38,7 @@ public class MainScreenPresenter {
     public void tick(SpriteBatch spriteBatch , ShapeRenderer shapeRenderer) {
         //Processing input events
         if(!inputEventLoop.isEmpty()) {
+            Gdx.app.log("MainScreenPresenter", "Parsing input events");
             InputGameEvent inputGameEvent = inputEventLoop.getEvent();
             if (inputGameEvent instanceof ScreenTouchEvent) {
                 MainScreenModel.getInstance().addTouch(((ScreenTouchEvent) inputGameEvent).getX(), ((ScreenTouchEvent) inputGameEvent).getY());
@@ -45,6 +46,7 @@ public class MainScreenPresenter {
         }
 
         if(!outputEventLoop.isEmpty()) {
+            Gdx.app.log("MainScreenPresenter", "Parsing output events");
             OutputGameEvent outputGameEvent = outputEventLoop.getEvent();
             if (outputGameEvent instanceof SetBackgroundEvent) {
                 //@TODO process
@@ -59,6 +61,7 @@ public class MainScreenPresenter {
         }
         //Drawing background each tick
         if (mainBackground != null) spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
+        Gdx.app.log("MainScreenPresenter", "Completed Tick");
     }
 
     //For background disposal

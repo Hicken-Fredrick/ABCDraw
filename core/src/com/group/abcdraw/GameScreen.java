@@ -79,6 +79,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Gdx.app.log("GameScreen", "Touch Down Registered");
         if(letter != 'Z') {
            if (letter == Character.toUpperCase(letter)){
                letter++;
@@ -97,6 +98,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        Gdx.app.log("GameScreen", "Touch Up Registered");
         presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
         return true;
     }
