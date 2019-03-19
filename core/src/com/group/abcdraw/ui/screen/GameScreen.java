@@ -1,4 +1,4 @@
-package com.group.abcdraw;
+package com.group.abcdraw.ui.screen;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;

@@ -1,6 +1,7 @@
 package com.group.abcdraw;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.group.abcdraw.ui.screen.GameScreen;
 
 public class Navigator {
     private static final Navigator ourInstance = new Navigator();
