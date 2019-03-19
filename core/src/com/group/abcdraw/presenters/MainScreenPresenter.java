@@ -16,26 +16,22 @@ import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.ui.background.BackgroundResource;
 
-public class MainScreenPresenter {
-    private static final MainScreenPresenter ourInstance = new MainScreenPresenter();
+public class MainScreenPresenter implements Presenter {
 
-    public static MainScreenPresenter getInstance() {
-        return ourInstance;
-    }
-
-    private MainScreenPresenter() {
+    public MainScreenPresenter() {
     }
 
     //For background disposal
-    private Texture backgroundTexture;
-    private TextureRegion mainBackground;
-    private int mainBackgroundHeight;
-    private int mainBackgroundWidth;
+    Texture backgroundTexture;
+    TextureRegion mainBackground;
+    int mainBackgroundHeight;
+    int mainBackgroundWidth;
 
-    InputEventLoop inputEventLoop = InputEventLoop.getInstance();
-    OutputEventLoop outputEventLoop = OutputEventLoop.getInstance();
+    InputEventLoop inputEventLoop = new InputEventLoop();
+    OutputEventLoop outputEventLoop = new OutputEventLoop();
 
-    public void tick(SpriteBatch spriteBatch , ShapeRenderer shapeRenderer) {
+    @Override
+    public void tick(SpriteBatch spriteBatch) {
         //Processing input events
         if(!inputEventLoop.isEmpty()) {
             Gdx.app.log("MainScreenPresenter", "Parsing input events");
@@ -65,20 +61,24 @@ public class MainScreenPresenter {
     }
 
     //For background disposal
+    @Override
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }
 
+    @Override
     public void addEvent(InputGameEvent event){
         inputEventLoop.add(event);
     }
 
+    @Override
     public void addEvent(OutputGameEvent event){
         outputEventLoop.add(event);
     }
 
     //Should be called after a sprite batch rendered
     //Otherwise there will be a black screen instead of background
+    @Override
     public void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer) {
         GlobalDraw.drawCircles(spriteBatch, shapeRenderer);
         GlobalDraw.drawLines(spriteBatch, shapeRenderer);

@@ -1,6 +1,8 @@
 package com.group.abcdraw;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
+import com.group.abcdraw.ui.screen.GameScreen;
 
 public class Navigator {
     private static final Navigator ourInstance = new Navigator();
@@ -9,16 +11,14 @@ public class Navigator {
         return ourInstance;
     }
 
-    private ApplicationAdapter currentScreen;
-
     private Navigator() {
     }
 
-    public ApplicationAdapter selectGameScreen(){
-        return new GameScreen();
+    public GameScreen selectGameScreen(Game aGame){
+        return new GameScreen(aGame);
     }
 
-    public ApplicationAdapter selectStartScreen(){
-        return new GameScreen();
+    public GameScreen selectStartScreen(Game aGame){
+        return new GameScreen(aGame);
     }
 }

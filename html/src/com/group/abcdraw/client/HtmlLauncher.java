@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.group.abcdraw.Navigator;
+import com.group.abcdraw.ui.screen.MainGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +47,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return Navigator.getInstance().selectGameScreen();
+                return new MainGame();
         }
 }
