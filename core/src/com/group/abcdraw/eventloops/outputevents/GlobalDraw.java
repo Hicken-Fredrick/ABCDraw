@@ -16,20 +16,13 @@ import java.util.List;
  */
 public class GlobalDraw {
 
-    //Transforming Y coordinates into actual screen coordinates
-    //the touches coordinates are 0,0 upper left
-    //the screen coordinates 0,0 are lower left
-    private static float transformY(float y) {
-        return Gdx.graphics.getHeight() - y;
-    }
-
     public static void drawCircles(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         List<Circle> touches = MainScreenModel.getInstance().getCircles();
         for (int i = 0; i < touches.size(); i++) {
-            shapeRenderer.circle(touches.get(i).getX(), transformY(touches.get(i).getY()), 20);
+            shapeRenderer.circle(touches.get(i).getX(), touches.get(i).getY(), 20);
         }
         shapeRenderer.end();
     }
@@ -39,7 +32,7 @@ public class GlobalDraw {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BLUE);
         for (Line l :MainScreenModel.getInstance().getLines()) {
-            shapeRenderer.line(l.getX1(), transformY(l.getY1()), l.getX2(), transformY(l.getY2()));
+            shapeRenderer.line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
         }
         shapeRenderer.end();
     }

@@ -16,29 +16,28 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.presenters.EditorScreenPresenter;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
 
-import java.util.ArrayList;
-
 /**
  * Created by julienvillegas on 17/01/2017.
  */
-public class GameScreen implements Screen {
+public class EditorScreen implements Screen {
 
     private Stage stage;
     private Game game;
     private SpriteBatch spriteBatch;
     private char letter;
-    Presenter presenter = new MainScreenPresenter();
+    Presenter presenter = new EditorScreenPresenter();
     ShapeRenderer shapeRenderer;
 
-    public GameScreen(Game aGame) {
+    public EditorScreen(Game aGame) {
         game = aGame;
         stage = new Stage(new ScreenViewport());
 
-        Label title = new Label("Playing Screen", MainGame.gameSkin,"big-black");
+        Label title = new Label("Editor Screen", MainGame.gameSkin,"big-black");
         title.setAlignment(Align.center);
         title.setY(Gdx.graphics.getHeight()*2/3);
         title.setWidth(Gdx.graphics.getWidth());
@@ -76,6 +75,8 @@ public class GameScreen implements Screen {
                     letter = 'a';
 
                 presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
+                //if true, the touchup event is fired - the events propagate further, touchDrag fires
+                // if return super.touchDown(event, screenX, screenY, pointer, button); the events are consumed, the touchup event is NOT fired, touchDrag is NOT fired
                 //return true;
                 return super.touchDown(event, screenX, screenY, pointer, button);
             }
