@@ -16,6 +16,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.eventloops.outputevents.SetCurrentLetterEvent;
+import com.group.abcdraw.model.Letter;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
@@ -31,6 +33,7 @@ public class GameScreen implements Screen {
     private Game game;
     private SpriteBatch spriteBatch;
     private char letter;
+    private Letter currentLetter;
     Presenter presenter = new MainScreenPresenter();
     ShapeRenderer shapeRenderer;
 
@@ -101,8 +104,10 @@ public class GameScreen implements Screen {
     public void show() {
         Gdx.app.log("MainScreen","show");
         letter ='a';
+        currentLetter = new Letter();
         spriteBatch = new SpriteBatch();
         presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
+        presenter.addEvent(new SetCurrentLetterEvent(currentLetter));
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setInputProcessor(stage);
     }

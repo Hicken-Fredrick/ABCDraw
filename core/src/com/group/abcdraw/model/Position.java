@@ -1,8 +1,12 @@
 package com.group.abcdraw.model;
 
+/**
+ * for holding locations to draw on each letter
+ */
 public class Position {
     float x;
     float y;
+    boolean touched;
 
     public Position(float x, float y) {
         this.x = x;
@@ -15,5 +19,13 @@ public class Position {
 
     public float getY() {
         return y;
+    }
+
+    public boolean isTouched() {
+        return touched;
+    }
+
+    public void setTouched(boolean touched) {
+        this.touched = touched;
     }
 }
