@@ -1,5 +1,7 @@
 package com.group.abcdraw.model;
 
+import java.util.ArrayList;
+
 /**
  * class for containing the points and completion
  * state for said point and the given letter
@@ -7,30 +9,28 @@ package com.group.abcdraw.model;
  */
 public class Letter {
     //vars
-    Position [] points;
+    char letter;
+    ArrayList<Position> points;
     boolean complete;
     int activePoint;
     int nextPoint;
     int finalPoint;
 
     //constructors
-    public Letter() {
-        points = new Position[3];
-        //!! FOR TESTING PURPOSES !!
-        points[0] = new Position(0,0);
-        points[1] = new Position(150,700);
-        points[2] = new Position(350,1000);
+    public Letter(char letter) {
+        this.letter = letter;
+        points = LetterPoints.getPoints(letter);
         //where to go and when letter is complete
         activePoint = 0;
         nextPoint = 1;
-        finalPoint = points.length;
+        finalPoint = points.size() - 1;
     }
 
-    public Position[] getPoints() {
+    public ArrayList<Position> getPoints() {
         return points;
     }
 
-    public void setPoints(Position[] points) {
+    public void setPoints(ArrayList<Position> points) {
         this.points = points;
     }
 

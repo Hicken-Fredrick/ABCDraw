@@ -20,6 +20,7 @@ import com.group.abcdraw.model.Position;
 import com.group.abcdraw.ui.background.BackgroundResource;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class MainScreenPresenter implements Presenter {
 
@@ -62,10 +63,10 @@ public class MainScreenPresenter implements Presenter {
             }
             if (outputGameEvent instanceof SetCurrentLetterEvent){
                 currentLetter = ((SetCurrentLetterEvent) outputGameEvent).getLetter();
-                Position[] drawPoints = currentLetter.getPoints();
+                ArrayList<Position> drawPoints = currentLetter.getPoints();
                 for (int i = 0; i < currentLetter.getFinalPoint() ; i++)
                 {
-                    MainScreenModel.getInstance().addTouch(drawPoints[i].getX(), drawPoints[i].getY());
+                    MainScreenModel.getInstance().addTouch(drawPoints.get(i).getX(), drawPoints.get(i).getY());
                 }
             }
         }

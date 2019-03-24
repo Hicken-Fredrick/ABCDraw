@@ -104,7 +104,7 @@ public class GameScreen implements Screen {
     public void show() {
         Gdx.app.log("MainScreen","show");
         letter ='a';
-        currentLetter = new Letter();
+        currentLetter = new Letter(letter);
         spriteBatch = new SpriteBatch();
         presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
         presenter.addEvent(new SetCurrentLetterEvent(currentLetter));
