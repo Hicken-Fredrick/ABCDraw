@@ -1,12 +1,10 @@
 package com.group.abcdraw.model;
 
-/**
- * for holding locations to draw on each letter
- */
+import java.util.Objects;
+
 public class Position {
     float x;
     float y;
-    boolean touched;
 
     public Position(float x, float y) {
         this.x = x;
@@ -21,11 +19,12 @@ public class Position {
         return y;
     }
 
-    public boolean isTouched() {
-        return touched;
-    }
-
-    public void setTouched(boolean touched) {
-        this.touched = touched;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return Float.compare(position.x, x) == 0 &&
+            Float.compare(position.y, y) == 0;
     }
 }
