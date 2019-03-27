@@ -13,8 +13,14 @@ import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.eventloops.outputevents.SetCurrentLetterEvent;
+import com.group.abcdraw.model.Letter;
 import com.group.abcdraw.model.MainScreenModel;
+import com.group.abcdraw.model.Position;
 import com.group.abcdraw.ui.background.BackgroundResource;
+
+import java.awt.Point;
+import java.util.ArrayList;
 
 public class MainScreenPresenter implements Presenter {
 
@@ -24,6 +30,7 @@ public class MainScreenPresenter implements Presenter {
     //For background disposal
     Texture backgroundTexture;
     TextureRegion mainBackground;
+    Letter currentLetter;
     int mainBackgroundHeight;
     int mainBackgroundWidth;
 
@@ -54,9 +61,21 @@ public class MainScreenPresenter implements Presenter {
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
             }
+            if (outputGameEvent instanceof SetCurrentLetterEvent){
+                currentLetter = ((SetCurrentLetterEvent) outputGameEvent).getLetter();
+                ArrayList<Position> drawPoints = currentLetter.getPoints();
+                for (int i = 0; i < currentLetter.getFinalPoint() ; i++)
+                {
+                    MainScreenModel.getInstance().addTouch(drawPoints.get(i).getX(), drawPoints.get(i).getY());
+                }
+            }
         }
         //Drawing background each tick
-        if (mainBackground != null) spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
+        if (mainBackground != null) {
+            //draw letter
+            spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
+            //draw points
+        }
         Gdx.app.log("MainScreenPresenter", "Completed Tick");
     }
 

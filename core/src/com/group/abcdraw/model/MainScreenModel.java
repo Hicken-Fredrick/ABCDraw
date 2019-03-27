@@ -35,6 +35,8 @@ public class MainScreenModel {
         circles.add(new Circle(x, y));
     }
 
+
+
     public List<Circle> getCircles() {
         return circles;
     }
