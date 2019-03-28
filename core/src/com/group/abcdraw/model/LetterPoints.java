@@ -1,6 +1,7 @@
 package com.group.abcdraw.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * storage for every letter point grouping
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 class LetterPoints {
     static ArrayList<Position> points = new ArrayList<Position>();
 
-    public static ArrayList<Position> getPoints(char letter) {
+    public static List<Position> getPoints(char letter) {
         switch (letter) {
             //a letter group
             case 'a':

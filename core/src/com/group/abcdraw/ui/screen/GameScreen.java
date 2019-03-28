@@ -79,8 +79,7 @@ public class GameScreen implements Screen {
                     letter = 'a';
 
                 presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
-                //return true;
-                return super.touchDown(event, screenX, screenY, pointer, button);
+                return true;
             }
 
             @Override

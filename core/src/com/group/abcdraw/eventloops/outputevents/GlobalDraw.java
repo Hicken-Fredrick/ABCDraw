@@ -1,11 +1,10 @@
 package com.group.abcdraw.eventloops.outputevents;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.group.abcdraw.model.MainScreenModel;
-import com.group.abcdraw.ui.shapes.Circle;
+import com.group.abcdraw.ui.shapes.CompleteCircle;
 import com.group.abcdraw.ui.shapes.Line;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class GlobalDraw {
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        List<Circle> touches = MainScreenModel.getInstance().getCircles();
+        List<CompleteCircle> touches = MainScreenModel.getInstance().getCompleteCircles();
         for (int i = 0; i < touches.size(); i++) {
             shapeRenderer.circle(touches.get(i).getX(), touches.get(i).getY(), 20);
         }

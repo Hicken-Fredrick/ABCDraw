@@ -1,6 +1,7 @@
 package com.group.abcdraw.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * class for containing the points and completion
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class Letter {
     //vars
     char letter;
-    ArrayList<Position> points;
+    List<Position> points;
     boolean complete;
     int activePoint;
     int nextPoint;
@@ -24,9 +25,10 @@ public class Letter {
         activePoint = 0;
         nextPoint = 1;
         finalPoint = points.size() - 1;
+        complete = false;
     }
 
-    public ArrayList<Position> getPoints() {
+    public List<Position> getPoints() {
         return points;
     }
 
