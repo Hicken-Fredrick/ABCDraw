@@ -15,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
-import com.group.abcdraw.eventloops.outputevents.SetCurrentLetterEvent;
 import com.group.abcdraw.model.Letter;
+import com.group.abcdraw.model.Position;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
-
-import java.util.ArrayList;
+import com.group.abcdraw.ui.shapes.IncompleteCircle;
 
 /**
  * Created by julienvillegas on 17/01/2017.
@@ -106,9 +106,13 @@ public class GameScreen implements Screen {
         currentLetter = new Letter(letter);
         spriteBatch = new SpriteBatch();
         presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
-        presenter.addEvent(new SetCurrentLetterEvent(currentLetter));
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setInputProcessor(stage);
+        //set up letter
+        currentLetter = new Letter(letter);
+        Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+        IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+        presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
     }
 
     @Override

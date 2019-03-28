@@ -64,4 +64,9 @@ public class Letter {
         return finalPoint;
     }
 
+    public Position getSpecificPoint(int location)
+    {
+        return points.get(location);
+    }
+
 }

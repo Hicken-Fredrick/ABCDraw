@@ -1,7 +1,6 @@
 package com.group.abcdraw.presenters;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,17 +10,11 @@ import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
-import com.group.abcdraw.eventloops.outputevents.SetCurrentLetterEvent;
-import com.group.abcdraw.model.Letter;
 import com.group.abcdraw.model.MainScreenModel;
-import com.group.abcdraw.model.Position;
 import com.group.abcdraw.ui.background.BackgroundResource;
-
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainScreenPresenter implements Presenter {
 
@@ -31,7 +24,6 @@ public class MainScreenPresenter implements Presenter {
     //For background disposal
     Texture backgroundTexture;
     TextureRegion mainBackground;
-    Letter currentLetter;
     int mainBackgroundHeight;
     int mainBackgroundWidth;
 
@@ -62,14 +54,10 @@ public class MainScreenPresenter implements Presenter {
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
             }
-            if (outputGameEvent instanceof SetCurrentLetterEvent){
-                currentLetter = ((SetCurrentLetterEvent) outputGameEvent).getLetter();
-                List<Position> drawPoints = currentLetter.getPoints();
-                for (int i = 0; i < currentLetter.getFinalPoint() ; i++)
-                {
-                    MainScreenModel.getInstance().addTouch(drawPoints.get(i).getX(), drawPoints.get(i).getY());
-                }
+            if (outputGameEvent instanceof ChangeActiveCircle) {
+                MainScreenModel.getInstance().setIncompleteCircle(((ChangeActiveCircle) outputGameEvent).getIncompleteCircle() );
             }
+
         }
         //Drawing background each tick
         if (mainBackground != null) {

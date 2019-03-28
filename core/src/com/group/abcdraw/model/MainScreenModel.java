@@ -58,6 +58,14 @@ public class MainScreenModel {
         this.incompleteCircle = incompleteCircle;
     }
 
+    public TouchCircle getTouchCircle() {
+        return touchCircle;
+    }
+
+    public IncompleteCircle getIncompleteCircle() {
+        return incompleteCircle;
+    }
+
     public List<CompleteCircle> getCompleteCircles() {
         return completeCircles;
     }

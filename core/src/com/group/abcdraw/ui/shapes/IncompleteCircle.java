@@ -8,7 +8,7 @@ import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
  * if finger is off screen this will be the point to touch
  */
 public class IncompleteCircle extends ScreenTouchEvent {
-    static final float radius = 20f;
+    static final float radius = 30f;
     Color color = Color.ORANGE;
 
     public IncompleteCircle(float x, float y) { super(x, y); }
