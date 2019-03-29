@@ -58,6 +58,23 @@ public class GlobalDraw {
         for (Line l :MainScreenModel.getInstance().getLines()) {
             shapeRenderer.line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
         }
+        //if touch isn't null draw from complete circle to finger
+        if (MainScreenModel.getInstance().getTouchCircle() != null)
+        {
+
+            shapeRenderer.line(MainScreenModel.getInstance().getFinalCompleteCircle().getX(),
+                    MainScreenModel.getInstance().getFinalCompleteCircle().getY(),
+                    MainScreenModel.getInstance().getTouchCircle().getX(),
+                    MainScreenModel.getInstance().getTouchCircle().getY());
+        }
+        //if touch is null draw line to last "checkpoint"
+        else
+        {
+            shapeRenderer.line(MainScreenModel.getInstance().getFinalCompleteCircle().getX(),
+                    MainScreenModel.getInstance().getFinalCompleteCircle().getY(),
+                    MainScreenModel.getInstance().getIncompleteCircle().getX(),
+                    MainScreenModel.getInstance().getIncompleteCircle().getY());
+        }
         shapeRenderer.end();
     }
 }

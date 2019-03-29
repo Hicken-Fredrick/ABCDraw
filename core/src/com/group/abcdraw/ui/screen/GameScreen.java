@@ -16,19 +16,22 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.Letter;
+import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.model.Position;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
 import com.group.abcdraw.ui.shapes.IncompleteCircle;
+import com.group.abcdraw.ui.shapes.TouchCircle;
 
 /**
  * Created by julienvillegas on 17/01/2017.
  */
 public class GameScreen implements Screen {
-
+    static final int TOLERANCE = 25;
     private Stage stage;
     private Game game;
     private SpriteBatch spriteBatch;
@@ -66,37 +69,66 @@ public class GameScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
-                if(letter != 'Z') {
-                    if (letter == Character.toUpperCase(letter)){
-                        letter++;
-                        letter = Character.toLowerCase(letter);
-                    }
-                    else {
-                        letter = Character.toUpperCase(letter);
-                    }
-                }
-                else
-                    letter = 'a';
 
+
+
+                //adds dots
                 presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
                 return true;
             }
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                Gdx.app.log("Stage Listener","inside touch dragged");
+                //make sure touch is within range of position
+                if(checkCloseEnough(x, y)) {
+
+                    //if position was last position move to next letter
+                    if (currentLetter.isComplete()) {
+                        if (letter != 'Z') {
+                            if (letter == Character.toUpperCase(letter)) {
+                                letter++;
+                                letter = Character.toLowerCase(letter);
+                            } else {
+                                letter = Character.toUpperCase(letter);
+                            }
+                        } else
+                            letter = 'a';
+
+                        MainScreenModel.getInstance().clear();
+                        presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
+                        currentLetter = new Letter(letter);
+                        super.touchDragged(event, x, y, pointer);
+                    }
+                }
+                if (MainScreenModel.getInstance().getTouchCircle() != null) {
+                   presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
+                }
 
                 super.touchDragged(event, x, y, pointer);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("GameScreen", "Touch Up Registered");
-                presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
-                //return true;
-                //super.touchUp(event, x, y, pointer, button);
+                //check if drag in null if(true) rollback complete and drag = null : else return
+                if (MainScreenModel.getInstance().getTouchCircle() != null) {
+
+                }
+
+                super.touchUp(event, x, y, pointer, button);
             }
         });
+    }
+
+    private boolean checkCloseEnough(float touchX, float touchY) {
+        //!! ADD CHECK TO SEE IF TOUCH / DRAG WITHIN RANGE
+        float pointX = MainScreenModel.getInstance().getIncompleteCircle().getX();
+        float pointY = MainScreenModel.getInstance().getIncompleteCircle().getY();
+        //check
+        if (touchX < pointX + TOLERANCE && touchX > pointX - TOLERANCE &&
+                touchY < pointY + TOLERANCE && touchY > pointX - TOLERANCE)
+            return true;
+        else
+            return false;
     }
 
     @Override

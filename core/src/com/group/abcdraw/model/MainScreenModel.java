@@ -16,9 +16,9 @@ public class MainScreenModel {
     private static final MainScreenModel ourInstance = new MainScreenModel();
 
     List<CompleteCircle> completeCircles = new ArrayList<CompleteCircle>();
-    List<Line> lines = new ArrayList<Line>();
     TouchCircle touchCircle;
     IncompleteCircle incompleteCircle;
+    List<Line> lines = new ArrayList<Line>();
     public static MainScreenModel getInstance() {
         return ourInstance;
     }
@@ -41,6 +41,13 @@ public class MainScreenModel {
 
     public void addCompleteCircle(CompleteCircle completeCircle)
     {
+        if(completeCircles.size() > 2)
+        {
+            lines.add(new Line(completeCircles.get(completeCircles.size()-1).getX()
+                    ,completeCircles.get(completeCircles.size()-1).getY(),
+                    completeCircle.getX(),
+                    completeCircle.getY()));
+        }
         completeCircles.add(completeCircle);
     }
 
@@ -70,7 +77,12 @@ public class MainScreenModel {
         return completeCircles;
     }
 
+    public CompleteCircle getFinalCompleteCircle() {
+        return completeCircles.get(completeCircles.size()-1);
+    }
+
     public List<Line> getLines() {
         return lines;
     }
+
 }

@@ -10,8 +10,11 @@ import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
 import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
+import com.group.abcdraw.eventloops.outputevents.RemoveCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.ui.background.BackgroundResource;
@@ -54,8 +57,17 @@ public class MainScreenPresenter implements Presenter {
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
             }
-            if (outputGameEvent instanceof ChangeActiveCircle) {
+            else if (outputGameEvent instanceof ChangeActiveCircle) {
                 MainScreenModel.getInstance().setIncompleteCircle(((ChangeActiveCircle) outputGameEvent).getIncompleteCircle() );
+            }
+            else if (outputGameEvent instanceof ChangeDragCircle) {
+                //change out old circle with new circle
+            }
+            else if (outputGameEvent instanceof AddCompleteCircle) {
+                //add a point to the complete circle list
+            }
+            else if (outputGameEvent instanceof RemoveCompleteCircle) {
+                //remove the final point from the complete circle list (no resources)
             }
 
         }

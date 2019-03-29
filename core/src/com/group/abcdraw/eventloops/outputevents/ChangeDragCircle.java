@@ -6,6 +6,10 @@ import com.group.abcdraw.ui.shapes.TouchCircle;
 public class ChangeDragCircle extends OutputGameEvent {
     private TouchCircle touchCircle;
 
+    public ChangeDragCircle(TouchCircle touchCircle) {
+        super();
+    }
+
     public TouchCircle getTouchCircle() {
         return touchCircle;
     }
