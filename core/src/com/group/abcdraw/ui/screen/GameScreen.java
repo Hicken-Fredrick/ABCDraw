@@ -69,7 +69,9 @@ public class GameScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
-
+                if(checkCloseEnough(screenX, screenY)) {
+                    
+                }
 
 
                 //adds dots
