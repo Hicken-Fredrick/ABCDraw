@@ -1,6 +1,8 @@
 package com.group.abcdraw.ui.background;
 
 public class BackgroundFactory {
+    public static final int BACKGROUND_WIDTH = 1440;
+    public static final int BACKGROUND_HEIGHT = 2960;
     private static final BackgroundFactory ourInstance = new BackgroundFactory();
 
     public static BackgroundFactory getInstance() {
@@ -17,6 +19,6 @@ public class BackgroundFactory {
         } else {
             name = "letterImages/uppercase"+letter+".png";
         }
-        return new BackgroundResource(name, 1440, 2960);
+        return new BackgroundResource(name, BACKGROUND_WIDTH, BACKGROUND_HEIGHT, PositionsRepository.getInstance().getByLetter(letter));
     }
 }

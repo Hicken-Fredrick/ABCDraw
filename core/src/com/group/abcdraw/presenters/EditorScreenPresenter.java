@@ -14,7 +14,9 @@ import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.model.Position;
+import com.group.abcdraw.ui.background.BackgroundFactory;
 import com.group.abcdraw.ui.background.BackgroundResource;
+import com.group.abcdraw.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +38,17 @@ public class EditorScreenPresenter extends MainScreenPresenter {
                 ScreenTouchEvent event = ((ScreenTouchEvent) inputGameEvent);
                 positionList.add(new Position(event.getX(),event.getY()));
                 for(Position p : positionList) {
-                    Gdx.app.log("EditorScreenPresenter", String.format("positionList.add(new Position(%f,%f));", p.getX(), p.getY()));
+                    Position texturePosition = Utils.toTexture(
+                        p.getX(),
+                        p.getY(),
+                        MainScreenModel.getInstance().getScreenWidth(),
+                        MainScreenModel.getInstance().getScreenHeight(),
+                        BackgroundFactory.BACKGROUND_WIDTH,
+                        BackgroundFactory.BACKGROUND_HEIGHT
+                    );
+                    Gdx.app.log("EditorScreenPresenter", String.format("positionList.add(new Position(%d, %d));",
+                        (int)texturePosition.getX(),
+                        (int)texturePosition.getY()));
                 }
             }
         }

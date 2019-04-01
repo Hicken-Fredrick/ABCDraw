@@ -53,6 +53,7 @@ public class MainScreenPresenter implements Presenter {
                 mainBackgroundWidth = Gdx.graphics.getWidth();
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
+                MainScreenModel.getInstance().setBackgroundResource(background);
             }
         }
         //Drawing background each tick
@@ -80,8 +81,8 @@ public class MainScreenPresenter implements Presenter {
     //Otherwise there will be a black screen instead of background
     @Override
     public void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer) {
-        GlobalDraw.drawCircles(spriteBatch, shapeRenderer);
-        GlobalDraw.drawLines(spriteBatch, shapeRenderer);
+        GlobalDraw.drawCircles(spriteBatch, shapeRenderer, MainScreenModel.getInstance().getCircles());
+        GlobalDraw.drawLines(spriteBatch, shapeRenderer, MainScreenModel.getInstance().getLines());
     }
 }
 

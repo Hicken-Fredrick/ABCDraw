@@ -16,22 +16,21 @@ import java.util.List;
  */
 public class GlobalDraw {
 
-    public static void drawCircles(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
+    public static void drawCircles(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer, List<Circle> touches){
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.setColor(Color.RED);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        List<Circle> touches = MainScreenModel.getInstance().getCircles();
         for (int i = 0; i < touches.size(); i++) {
             shapeRenderer.circle(touches.get(i).getX(), touches.get(i).getY(), 20);
         }
         shapeRenderer.end();
     }
 
-    public static void drawLines(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
+    public static void drawLines(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer, List<Line> lines){
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(Color.BLUE);
-        for (Line l :MainScreenModel.getInstance().getLines()) {
+        for (Line l :lines) {
             shapeRenderer.line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
         }
         shapeRenderer.end();

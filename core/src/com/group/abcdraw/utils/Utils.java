@@ -54,4 +54,10 @@ public class Utils {
         if(toY > screenMaxY) toY = screenMaxY;
         return new Position(toX,toY);
     }
+
+    public static Position toScreen(Position p, float screenMaxX, float screenMaxY, float textureMaxX, float textureMaxY){
+        float x = p.getX();
+        float y = p.getY();
+        return toScreen(x, y, screenMaxX, screenMaxY, textureMaxX, textureMaxY);
+    }
 }

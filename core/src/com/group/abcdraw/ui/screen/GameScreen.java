@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
@@ -37,6 +38,9 @@ public class GameScreen implements Screen {
     public GameScreen(Game aGame) {
         game = aGame;
         stage = new Stage(new ScreenViewport());
+
+        MainScreenModel.getInstance().setScreenHeight(Gdx.graphics.getHeight());
+        MainScreenModel.getInstance().setScreenWidth(Gdx.graphics.getWidth());
 
         Label title = new Label("Playing Screen", MainGame.gameSkin,"big-black");
         title.setAlignment(Align.center);

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
+import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.presenters.EditorScreenPresenter;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
@@ -34,8 +35,12 @@ public class EditorScreen implements Screen {
     ShapeRenderer shapeRenderer;
 
     public EditorScreen(Game aGame) {
+
         game = aGame;
         stage = new Stage(new ScreenViewport());
+
+        MainScreenModel.getInstance().setScreenHeight(Gdx.graphics.getHeight());
+        MainScreenModel.getInstance().setScreenWidth(Gdx.graphics.getWidth());
 
         Label title = new Label("Editor Screen", MainGame.gameSkin,"big-black");
         title.setAlignment(Align.center);
