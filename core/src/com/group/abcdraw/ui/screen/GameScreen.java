@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
@@ -24,6 +25,7 @@ import com.group.abcdraw.model.Position;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
+import com.group.abcdraw.ui.shapes.CompleteCircle;
 import com.group.abcdraw.ui.shapes.IncompleteCircle;
 import com.group.abcdraw.ui.shapes.TouchCircle;
 
@@ -70,7 +72,17 @@ public class GameScreen implements Screen {
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
                 if(checkCloseEnough(screenX, screenY)) {
-                    
+                    //add drag circle for finger position
+                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(screenX, screenY)));
+                    //push to next circle and make touched circle complete
+                    Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
+                    //display next circle as the inactive circle
+                    Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
+                    presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+                    //increment points within letter
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
                 }
 
 
@@ -83,6 +95,11 @@ public class GameScreen implements Screen {
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //make sure touch is within range of position
                 if(checkCloseEnough(x, y)) {
+                    //add drag circle for finger position
+                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
+                    //push to next circle and make touched circle complete
+                    Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
 
                     //if position was last position move to next letter
                     if (currentLetter.isComplete()) {
@@ -101,8 +118,16 @@ public class GameScreen implements Screen {
                         currentLetter = new Letter(letter);
                         super.touchDragged(event, x, y, pointer);
                     }
+
+                    //display next circle as the inactive circle
+                    Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
+                    presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+                    //increment points within letter
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
                 }
-                if (MainScreenModel.getInstance().getTouchCircle() != null) {
+
+                else if (MainScreenModel.getInstance().getTouchCircle() != null) {
                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
                 }
 

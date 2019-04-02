@@ -6,6 +6,10 @@ import com.group.abcdraw.ui.shapes.CompleteCircle;
 public class AddCompleteCircle extends OutputGameEvent {
     private CompleteCircle completeCircle;
 
+    public AddCompleteCircle(CompleteCircle completeCircle) {
+        super();
+    }
+
     public CompleteCircle getCompleteCircle() {
         return completeCircle;
     }
