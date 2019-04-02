@@ -65,6 +65,7 @@ public class MainScreenPresenter implements Presenter {
             }
             else if (outputGameEvent instanceof AddCompleteCircle) {
                MainScreenModel.getInstance().addCompleteCircle(((AddCompleteCircle) outputGameEvent).getCompleteCircle());
+                Gdx.app.log("Added Complete Circle","Circle at: " + ((AddCompleteCircle) outputGameEvent).getCompleteCircle().getX() + " - " + ((AddCompleteCircle) outputGameEvent).getCompleteCircle().getY());
             }
             else if (outputGameEvent instanceof RemoveCompleteCircle) {
                 MainScreenModel.getInstance().popCompleteCircle();

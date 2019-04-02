@@ -7,7 +7,7 @@ public class ChangeDragCircle extends OutputGameEvent {
     private TouchCircle touchCircle;
 
     public ChangeDragCircle(TouchCircle touchCircle) {
-        super();
+        this.touchCircle = touchCircle;
     }
 
     public TouchCircle getTouchCircle() {

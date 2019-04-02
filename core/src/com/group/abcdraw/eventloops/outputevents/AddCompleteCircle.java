@@ -7,7 +7,7 @@ public class AddCompleteCircle extends OutputGameEvent {
     private CompleteCircle completeCircle;
 
     public AddCompleteCircle(CompleteCircle completeCircle) {
-        super();
+        this.completeCircle = completeCircle;
     }
 
     public CompleteCircle getCompleteCircle() {

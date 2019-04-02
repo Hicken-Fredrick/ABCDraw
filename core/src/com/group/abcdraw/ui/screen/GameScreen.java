@@ -74,12 +74,15 @@ public class GameScreen implements Screen {
                 if(checkCloseEnough(screenX, screenY)) {
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(screenX, screenY)));
+
                     //push to next circle and make touched circle complete
                     Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
                     presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
+
                     //display next circle as the inactive circle
                     Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
                     presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+
                     //increment points within letter
                     currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
                     currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
@@ -96,13 +99,13 @@ public class GameScreen implements Screen {
                 if(checkCloseEnough(x, y)) {
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
-                    
+
                     //push to next circle and make touched circle complete
                     Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
                     presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
 
-                    if (currentLetter.isComplete())
-                    {
+                    if (currentLetter.getActivePoint() == currentLetter.getFinalPoint()) {
+                        currentLetter.setComplete(true);
                         return;
                     }
 
