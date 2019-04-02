@@ -85,43 +85,31 @@ public class GameScreen implements Screen {
                     currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
                 }
 
-
-                //adds dots
-                presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
                 return true;
             }
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //make sure touch is within range of position
+                //presenter.addEvent(new ScreenTouchEvent(x, y));
+
                 if(checkCloseEnough(x, y)) {
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
+                    
                     //push to next circle and make touched circle complete
                     Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
                     presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
 
-                    //if position was last position move to next letter
-                    if (currentLetter.isComplete()) {
-                        if (letter != 'Z') {
-                            if (letter == Character.toUpperCase(letter)) {
-                                letter++;
-                                letter = Character.toLowerCase(letter);
-                            } else {
-                                letter = Character.toUpperCase(letter);
-                            }
-                        } else
-                            letter = 'a';
-
-                        MainScreenModel.getInstance().clear();
-                        presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
-                        currentLetter = new Letter(letter);
-                        super.touchDragged(event, x, y, pointer);
+                    if (currentLetter.isComplete())
+                    {
+                        return;
                     }
 
                     //display next circle as the inactive circle
                     Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
                     presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+
                     //increment points within letter
                     currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
                     currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
@@ -136,8 +124,25 @@ public class GameScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                //check if drag in null if(true) rollback complete and drag = null : else return
-                if (MainScreenModel.getInstance().getTouchCircle() != null) {
+                //if position was last position move to next letter
+                if (currentLetter.isComplete()) {
+                    if (letter != 'Z') {
+                        if (letter == Character.toUpperCase(letter)) {
+                            letter++;
+                            letter = Character.toLowerCase(letter);
+                        } else {
+                            letter = Character.toUpperCase(letter);
+                        }
+                    } else
+                        letter = 'a';
+
+                    MainScreenModel.getInstance().clear();
+                    presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
+                    currentLetter = new Letter(letter);
+                    super.touchDragged(event, x, y, pointer);
+                }
+
+                else if (MainScreenModel.getInstance().getTouchCircle() != null) {
 
                 }
 

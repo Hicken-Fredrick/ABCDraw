@@ -61,13 +61,13 @@ public class MainScreenPresenter implements Presenter {
                 MainScreenModel.getInstance().setIncompleteCircle(((ChangeActiveCircle) outputGameEvent).getIncompleteCircle() );
             }
             else if (outputGameEvent instanceof ChangeDragCircle) {
-                //change out old circle with new circle
+                MainScreenModel.getInstance().setTouchCircle(((ChangeDragCircle) outputGameEvent).getTouchCircle());
             }
             else if (outputGameEvent instanceof AddCompleteCircle) {
-                //add a point to the complete circle list
+               MainScreenModel.getInstance().addCompleteCircle(((AddCompleteCircle) outputGameEvent).getCompleteCircle());
             }
             else if (outputGameEvent instanceof RemoveCompleteCircle) {
-                //remove the final point from the complete circle list (no resources)
+                MainScreenModel.getInstance().popCompleteCircle();
             }
 
         }

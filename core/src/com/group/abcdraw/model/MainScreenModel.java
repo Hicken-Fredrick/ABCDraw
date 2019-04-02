@@ -78,7 +78,10 @@ public class MainScreenModel {
     }
 
     public CompleteCircle getFinalCompleteCircle() {
-        return completeCircles.get(completeCircles.size()-1);
+        if (completeCircles.size() == 0)
+            return null;
+        else
+            return completeCircles.get(completeCircles.size()-1);
     }
 
     public List<Line> getLines() {

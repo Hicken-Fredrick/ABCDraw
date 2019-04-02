@@ -59,6 +59,11 @@ public class GlobalDraw {
             shapeRenderer.line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
         }
         //if touch isn't null draw from complete circle to finger
+        if(MainScreenModel.getInstance().getFinalCompleteCircle() == null)
+        {
+            shapeRenderer.end();
+            return;
+        }
         if (MainScreenModel.getInstance().getTouchCircle() != null)
         {
 
