@@ -18,6 +18,7 @@ import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
 import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
+import com.group.abcdraw.eventloops.outputevents.RemoveCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.Letter;
 import com.group.abcdraw.model.MainScreenModel;
@@ -96,7 +97,7 @@ public class GameScreen implements Screen {
                 //make sure touch is within range of position
                 //presenter.addEvent(new ScreenTouchEvent(x, y));
 
-                if(checkCloseEnough(x, y)) {
+                if(checkCloseEnough(x, y) && !currentLetter.isComplete()) {
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
 
@@ -146,7 +147,8 @@ public class GameScreen implements Screen {
                 }
 
                 else if (MainScreenModel.getInstance().getTouchCircle() != null) {
-
+                    presenter.addEvent(new RemoveCompleteCircle());
+                    presenter.addEvent(new ChangeDragCircle(null));
                 }
 
                 super.touchUp(event, x, y, pointer, button);
