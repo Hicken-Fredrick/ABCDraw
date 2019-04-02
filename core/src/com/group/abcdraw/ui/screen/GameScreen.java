@@ -146,6 +146,7 @@ public class GameScreen implements Screen {
                     super.touchDragged(event, x, y, pointer);
                 }
 
+                //if touch circle isn't null roll back to last checkpoint
                 else if (MainScreenModel.getInstance().getTouchCircle() != null) {
                     presenter.addEvent(new RemoveCompleteCircle());
                     presenter.addEvent(new ChangeDragCircle(null));
