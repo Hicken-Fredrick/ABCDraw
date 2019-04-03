@@ -96,7 +96,7 @@ public class GameScreen implements Screen {
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //make sure touch is within range of position
                 //presenter.addEvent(new ScreenTouchEvent(x, y));
-
+                Gdx.app.log("enter drag", "ENTERING DRAG");
                 if(checkCloseEnough(x, y) && !currentLetter.isComplete()) {
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
@@ -122,7 +122,7 @@ public class GameScreen implements Screen {
                 else if (MainScreenModel.getInstance().getTouchCircle() != null) {
                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
                 }
-
+                Gdx.app.log("exit drag", "EXITING DRAG");
                 super.touchDragged(event, x, y, pointer);
             }
 
@@ -159,11 +159,11 @@ public class GameScreen implements Screen {
 
     private boolean checkCloseEnough(float touchX, float touchY) {
         //!! ADD CHECK TO SEE IF TOUCH / DRAG WITHIN RANGE
-        float pointX = MainScreenModel.getInstance().getIncompleteCircle().getX();
-        float pointY = MainScreenModel.getInstance().getIncompleteCircle().getY();
+        Position close = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+
         //check
-        if (touchX < pointX + TOLERANCE && touchX > pointX - TOLERANCE &&
-                touchY < pointY + TOLERANCE && touchY > pointX - TOLERANCE)
+        if (touchX < close.getX() + TOLERANCE && touchX > close.getX() - TOLERANCE &&
+                touchY < close.getY() + TOLERANCE && touchY > close.getY() - TOLERANCE)
             return true;
         else
             return false;
