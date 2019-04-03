@@ -28,12 +28,15 @@ public class Letter {
         complete = false;
     }
 
+    public void clear() { points = null; finalPoint = 0; activePoint = 0; nextPoint = 1; }
+
     public List<Position> getPoints() {
         return points;
     }
 
     public void setPoints(ArrayList<Position> points) {
         this.points = points;
+        finalPoint = points.size() - 1;
     }
 
     public boolean isComplete() {

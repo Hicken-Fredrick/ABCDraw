@@ -144,11 +144,13 @@ public class GameScreen implements Screen {
                     MainScreenModel.getInstance().clear();
                     presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
                     currentLetter = new Letter(letter);
+                    Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());
 
                     //reset to beginning
                     Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
                     IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
                     presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+                    presenter.addEvent(new ChangeDragCircle(null));
 
                     super.touchDragged(event, x, y, pointer);
                 }
@@ -156,6 +158,14 @@ public class GameScreen implements Screen {
                 //if touch circle isn't null roll back to last checkpoint
                 else if (MainScreenModel.getInstance().getTouchCircle() != null) {
                     presenter.addEvent(new RemoveCompleteCircle());
+                    //subtract backwards
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() - 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() - 1);
+                    //move incomplete backwards
+                    Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+                    presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+                    //remove drag circle
                     presenter.addEvent(new ChangeDragCircle(null));
                 }
 
@@ -186,10 +196,12 @@ public class GameScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setInputProcessor(stage);
         //set up letter
+        currentLetter.clear();
         currentLetter = new Letter(letter);
         Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
         IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
         presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+        Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());
     }
 
     @Override
