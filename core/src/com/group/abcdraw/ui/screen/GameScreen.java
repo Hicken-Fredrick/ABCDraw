@@ -140,9 +140,16 @@ public class GameScreen implements Screen {
                     } else
                         letter = 'a';
 
+                    //change letter and screen
                     MainScreenModel.getInstance().clear();
                     presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
                     currentLetter = new Letter(letter);
+
+                    //reset to beginning
+                    Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+                    presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+
                     super.touchDragged(event, x, y, pointer);
                 }
 
