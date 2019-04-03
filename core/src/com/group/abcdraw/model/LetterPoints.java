@@ -11,12 +11,19 @@ class LetterPoints {
     static ArrayList<Position> points = new ArrayList<Position>();
 
     public static List<Position> getPoints(char letter) {
+        points.clear();
         switch (letter) {
             //a letter group
             case 'a':
-                points.add(new Position(150,300));
-                points.add(new Position(250,600));
-                points.add(new Position(350,900));
+                points.add(new Position(775, 1022));
+                points.add(new Position(526, 988));
+                points.add(new Position(320, 903));
+                points.add(new Position(278, 732));
+                points.add(new Position(452, 676));
+                points.add(new Position(667, 691));
+                points.add(new Position(786, 805));
+                points.add(new Position(803, 1018));
+                points.add(new Position(804, 702));
                 return points;
             case 'A':
                 points.add(new Position(150,300));

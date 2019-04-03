@@ -41,7 +41,7 @@ public class MainScreenModel {
 
     public void addCompleteCircle(CompleteCircle completeCircle)
     {
-        if(completeCircles.size() > 2)
+        if(completeCircles.size() > 0)
         {
             lines.add(new Line(completeCircles.get(completeCircles.size()-1).getX()
                     ,completeCircles.get(completeCircles.size()-1).getY(),

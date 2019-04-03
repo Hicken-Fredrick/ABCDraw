@@ -201,7 +201,6 @@ public class GameScreen implements Screen {
         Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
         IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
         presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
-        Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());
     }
 
     @Override
