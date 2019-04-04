@@ -201,6 +201,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         //set up letter
         currentLetter.clear();
+        MainScreenModel.getInstance().clear();
         currentLetter = new Letter(letter);
         Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
         IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
