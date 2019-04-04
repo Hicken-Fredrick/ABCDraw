@@ -1,5 +1,6 @@
 package com.group.abcdraw.model;
 
+import com.group.abcdraw.ui.background.BackgroundResource;
 import com.group.abcdraw.ui.shapes.CompleteCircle;
 import com.group.abcdraw.ui.shapes.IncompleteCircle;
 import com.group.abcdraw.ui.shapes.Line;
@@ -19,6 +20,9 @@ public class MainScreenModel {
     TouchCircle touchCircle;
     IncompleteCircle incompleteCircle;
     List<Line> lines = new ArrayList<Line>();
+    private float screenWidth, screenHeight;
+    private BackgroundResource backgroundResource;
+
     public static MainScreenModel getInstance() {
         return ourInstance;
     }
@@ -88,4 +92,31 @@ public class MainScreenModel {
         return lines;
     }
 
+    public static MainScreenModel getOurInstance() {
+        return ourInstance;
+    }
+
+    public float getScreenWidth() {
+        return screenWidth;
+    }
+
+    public void setScreenWidth(float screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
+    public float getScreenHeight() {
+        return screenHeight;
+    }
+
+    public void setScreenHeight(float screenHeight) {
+        this.screenHeight = screenHeight;
+    }
+
+    public BackgroundResource getBackgroundResource() {
+        return backgroundResource;
+    }
+
+    public void setBackgroundResource(BackgroundResource backgroundResource) {
+        this.backgroundResource = backgroundResource;
+    }
 }

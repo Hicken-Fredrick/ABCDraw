@@ -56,6 +56,7 @@ public class MainScreenPresenter implements Presenter {
                 mainBackgroundWidth = Gdx.graphics.getWidth();
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
+                MainScreenModel.getInstance().setBackgroundResource(background);
             }
             else if (outputGameEvent instanceof ChangeActiveCircle) {
                 MainScreenModel.getInstance().setIncompleteCircle(((ChangeActiveCircle) outputGameEvent).getIncompleteCircle() );

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.group.abcdraw.model.MainScreenModel;
 
 public class TitleScreen implements Screen {
 
@@ -20,6 +21,9 @@ public class TitleScreen implements Screen {
     public TitleScreen(Game aGame) {
         game = aGame;
         stage = new Stage(new ScreenViewport());
+
+        MainScreenModel.getInstance().setScreenHeight(Gdx.graphics.getHeight());
+        MainScreenModel.getInstance().setScreenWidth(Gdx.graphics.getWidth());
 
         Label title = new Label("ABCDraw", MainGame.gameSkin,"big-black");
         title.setAlignment(Align.center);
