@@ -35,4 +35,8 @@ public class InputEventLoop implements Realtime {
     public void add(InputGameEvent event) {
         queue.add(event);
     }
+
+    public void clear() {
+        queue.clear();
+    }
 }

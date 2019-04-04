@@ -79,7 +79,7 @@ public class MainScreenPresenter implements Presenter {
             spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
             //draw points
         }
-        Gdx.app.log("MainScreenPresenter", "Completed Tick");
+        //Gdx.app.log("MainScreenPresenter", "Completed Tick");
     }
 
     //For background disposal
@@ -104,6 +104,12 @@ public class MainScreenPresenter implements Presenter {
     public void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer) {
         GlobalDraw.drawCircles(spriteBatch, shapeRenderer);
         GlobalDraw.drawLines(spriteBatch, shapeRenderer);
+    }
+
+    @Override
+    public void clearQueues() {
+        outputEventLoop.clear();
+        inputEventLoop.clear();
     }
 }
 

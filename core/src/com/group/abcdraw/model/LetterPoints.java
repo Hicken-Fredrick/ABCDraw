@@ -15,15 +15,33 @@ class LetterPoints {
         switch (letter) {
             //a letter group
             case 'a':
-                points.add(new Position(775, 1022));
-                points.add(new Position(526, 988));
-                points.add(new Position(320, 903));
-                points.add(new Position(278, 732));
-                points.add(new Position(452, 676));
-                points.add(new Position(667, 691));
-                points.add(new Position(786, 805));
-                points.add(new Position(803, 1018));
-                points.add(new Position(804, 702));
+//                points.add(new Position(775, 1022));
+//                points.add(new Position(526, 988));
+//                points.add(new Position(320, 903));
+//                points.add(new Position(278, 732));
+//                points.add(new Position(452, 676));
+//                points.add(new Position(667, 691));
+//                points.add(new Position(786, 805));
+//                points.add(new Position(803, 1018));
+//                points.add(new Position(804, 702));
+
+                points.add(new Position(912, 946));
+                points.add(new Position(798, 950));
+                points.add(new Position(694, 944));
+                points.add(new Position(588, 917));
+                points.add(new Position(464, 883));
+                points.add(new Position(408, 816));
+                points.add(new Position(358, 718));
+                points.add(new Position(420, 637));
+                points.add(new Position(528, 587));
+                points.add(new Position(658, 582));
+                points.add(new Position(798, 591));
+                points.add(new Position(902, 642));
+                points.add(new Position(1010, 706));
+                points.add(new Position(1032, 798));
+                points.add(new Position(1036, 897));
+                points.add(new Position(1056, 957));
+                points.add(new Position(1018, 600));
                 return points;
             case 'A':
                 points.add(new Position(150,300));
