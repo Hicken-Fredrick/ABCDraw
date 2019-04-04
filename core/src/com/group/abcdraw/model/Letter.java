@@ -1,5 +1,7 @@
 package com.group.abcdraw.model;
 
+import com.group.abcdraw.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +19,23 @@ public class Letter {
     int nextPoint;
     int finalPoint;
 
+    static float textureMaxX = 1440f;
+    static float textureMaxY = 2960f;
+
     //constructors
     public Letter(char letter) {
         this.letter = letter;
-        points = LetterPoints.getPoints(letter);
+        //transforming all points to screen coordinates
+        List<Position> texturePoints = LetterPoints.getPoints(letter);
+        MainScreenModel mainScreenModel = MainScreenModel.getInstance();
+        points = new ArrayList<Position>();
+        for(Position t: texturePoints) points.add(Utils.toScreen(
+                t,
+                mainScreenModel.getScreenWidth(),
+                mainScreenModel.getScreenHeight(),
+                textureMaxX,
+                textureMaxY));
+
         //where to go and when letter is complete
         activePoint = 0;
         nextPoint = 1;

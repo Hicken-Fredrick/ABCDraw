@@ -46,7 +46,7 @@ public class EditorScreenPresenter extends MainScreenPresenter {
                         BackgroundFactory.BACKGROUND_WIDTH,
                         BackgroundFactory.BACKGROUND_HEIGHT
                     );
-                    Gdx.app.log("EditorScreenPresenter", String.format("positionList.add(new Position(%d, %d));",
+                    Gdx.app.log("EditorScreenPresenter", String.format("points.add(new Position(%d, %d));",
                         (int)texturePosition.getX(),
                         (int)texturePosition.getY()));
                 }

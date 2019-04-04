@@ -77,6 +77,7 @@ public class GameScreen implements Screen {
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
                 if(checkCloseEnough(screenX, screenY)) {
+                    presenter.clearQueues();
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(screenX, screenY)));
 
@@ -102,6 +103,7 @@ public class GameScreen implements Screen {
                 //presenter.addEvent(new ScreenTouchEvent(x, y));
                 Gdx.app.log("enter drag", "ENTERING DRAG");
                 if(checkCloseEnough(x, y) && !currentLetter.isComplete()) {
+                    presenter.clearQueues();
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
 
@@ -111,6 +113,7 @@ public class GameScreen implements Screen {
 
                     if (currentLetter.getActivePoint() == currentLetter.getFinalPoint()) {
                         currentLetter.setComplete(true);
+                        presenter.clearQueues();
                         return;
                     }
 

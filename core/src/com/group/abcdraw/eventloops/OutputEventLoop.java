@@ -32,4 +32,8 @@ public class OutputEventLoop implements Realtime {
     public void add(OutputGameEvent event) {
         queue.add(event);
     }
+
+    public void clear() {
+        queue.clear();
+    }
 }

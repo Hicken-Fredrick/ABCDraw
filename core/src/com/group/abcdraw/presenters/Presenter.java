@@ -19,4 +19,6 @@ public interface Presenter {
     //Should be called after a sprite batch rendered
     //Otherwise there will be a black screen instead of background
     void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer);
+
+    void clearQueues();
 }
