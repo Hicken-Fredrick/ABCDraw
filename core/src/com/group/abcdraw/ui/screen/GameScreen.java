@@ -15,20 +15,26 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
+import com.group.abcdraw.eventloops.outputevents.RemoveCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
-import com.group.abcdraw.eventloops.outputevents.SetCurrentLetterEvent;
 import com.group.abcdraw.model.Letter;
+import com.group.abcdraw.model.MainScreenModel;
+import com.group.abcdraw.model.Position;
 import com.group.abcdraw.presenters.MainScreenPresenter;
 import com.group.abcdraw.presenters.Presenter;
 import com.group.abcdraw.ui.background.BackgroundFactory;
-
-import java.util.ArrayList;
+import com.group.abcdraw.ui.shapes.CompleteCircle;
+import com.group.abcdraw.ui.shapes.IncompleteCircle;
+import com.group.abcdraw.ui.shapes.TouchCircle;
 
 /**
  * Created by julienvillegas on 17/01/2017.
  */
 public class GameScreen implements Screen {
-
+    static final int TOLERANCE = 25;
     private Stage stage;
     private Game game;
     private SpriteBatch spriteBatch;
@@ -66,38 +72,118 @@ public class GameScreen implements Screen {
             @Override
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
-                if(letter != 'Z') {
-                    if (letter == Character.toUpperCase(letter)){
-                        letter++;
-                        letter = Character.toLowerCase(letter);
-                    }
-                    else {
-                        letter = Character.toUpperCase(letter);
-                    }
-                }
-                else
-                    letter = 'a';
+                if(checkCloseEnough(screenX, screenY)) {
+                    //add drag circle for finger position
+                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(screenX, screenY)));
 
-                presenter.addEvent(new ScreenTouchEvent(screenX, screenY));
-                //return true;
-                return super.touchDown(event, screenX, screenY, pointer, button);
+                    //push to next circle and make touched circle complete
+                    Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
+
+                    //display next circle as the inactive circle
+                    Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
+                    presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+
+                    //increment points within letter
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
+                }
+
+                return true;
             }
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                Gdx.app.log("Stage Listener","inside touch dragged");
+                //make sure touch is within range of position
+                //presenter.addEvent(new ScreenTouchEvent(x, y));
+                Gdx.app.log("enter drag", "ENTERING DRAG");
+                if(checkCloseEnough(x, y) && !currentLetter.isComplete()) {
+                    //add drag circle for finger position
+                    presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
 
+                    //push to next circle and make touched circle complete
+                    Position completed = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    presenter.addEvent(new AddCompleteCircle( new CompleteCircle( completed.getX(), completed.getY() ) ) );
+
+                    if (currentLetter.getActivePoint() == currentLetter.getFinalPoint()) {
+                        currentLetter.setComplete(true);
+                        return;
+                    }
+
+                    //display next circle as the inactive circle
+                    Position nextPoint = currentLetter.getSpecificPoint(currentLetter.getNextPoint());
+                    presenter.addEvent(new ChangeActiveCircle(new IncompleteCircle(nextPoint.getX(), nextPoint.getY())));
+
+                    //increment points within letter
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() + 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() + 1);
+                }
+
+                else if (MainScreenModel.getInstance().getTouchCircle() != null) {
+                   presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
+                }
+                Gdx.app.log("exit drag", "EXITING DRAG");
                 super.touchDragged(event, x, y, pointer);
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("GameScreen", "Touch Up Registered");
-                presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
-                //return true;
-                //super.touchUp(event, x, y, pointer, button);
+                //if position was last position move to next letter
+                if (currentLetter.isComplete()) {
+                    if (letter != 'Z') {
+                        if (letter == Character.toUpperCase(letter)) {
+                            letter++;
+                            letter = Character.toLowerCase(letter);
+                        } else {
+                            letter = Character.toUpperCase(letter);
+                        }
+                    } else
+                        letter = 'a';
+
+                    //change letter and screen
+                    MainScreenModel.getInstance().clear();
+                    presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
+                    currentLetter = new Letter(letter);
+                    Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());
+
+                    //reset to beginning
+                    Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+                    presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+                    presenter.addEvent(new ChangeDragCircle(null));
+
+                    super.touchDragged(event, x, y, pointer);
+                }
+
+                //if touch circle isn't null roll back to last checkpoint
+                else if (MainScreenModel.getInstance().getTouchCircle() != null) {
+                    presenter.addEvent(new RemoveCompleteCircle());
+                    //subtract backwards
+                    currentLetter.setNextPoint(currentLetter.getNextPoint() - 1);
+                    currentLetter.setActivePoint(currentLetter.getActivePoint() - 1);
+                    //move incomplete backwards
+                    Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+                    IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+                    presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
+                    //remove drag circle
+                    presenter.addEvent(new ChangeDragCircle(null));
+                }
+
+                super.touchUp(event, x, y, pointer, button);
             }
         });
+    }
+
+    private boolean checkCloseEnough(float touchX, float touchY) {
+        //!! ADD CHECK TO SEE IF TOUCH / DRAG WITHIN RANGE
+        Position close = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+
+        //check
+        if (touchX < close.getX() + TOLERANCE && touchX > close.getX() - TOLERANCE &&
+                touchY < close.getY() + TOLERANCE && touchY > close.getY() - TOLERANCE)
+            return true;
+        else
+            return false;
     }
 
     @Override
@@ -107,9 +193,14 @@ public class GameScreen implements Screen {
         currentLetter = new Letter(letter);
         spriteBatch = new SpriteBatch();
         presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
-        presenter.addEvent(new SetCurrentLetterEvent(currentLetter));
         shapeRenderer = new ShapeRenderer();
         Gdx.input.setInputProcessor(stage);
+        //set up letter
+        currentLetter.clear();
+        currentLetter = new Letter(letter);
+        Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
+        IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+        presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
     }
 
     @Override
