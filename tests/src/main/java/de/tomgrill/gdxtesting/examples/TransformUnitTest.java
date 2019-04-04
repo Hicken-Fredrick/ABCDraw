@@ -21,6 +21,8 @@ import com.group.abcdraw.utils.Utils;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
@@ -122,4 +124,14 @@ public class TransformUnitTest {
 		assertEquals(screenMaxY/2f, toPos.getY(), 0.0001);
 	}
 
+	@Test
+	public void randomPointsfromScreenBackToScreen() {
+		for (int i = 0; i < 100; i++) {
+			Position screen = new Position((float) (Math.random() * screenMaxX), (float)(Math.random() * screenMaxY) );
+			Position texture = Utils.toTexture(screen.getX(), screen.getY(), screenMaxX, screenMaxY,  textureMaxX, textureMaxY);
+			Position screenNew = Utils.toScreen(texture, screenMaxX, screenMaxY,  textureMaxX, textureMaxY);
+			assertEquals(screen.getX(), screenNew.getX(), 0.001);
+			assertEquals(screen.getY(), screenNew.getY(), 0.001);
+		}
+	}
 }
