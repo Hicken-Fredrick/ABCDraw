@@ -35,7 +35,7 @@ import com.group.abcdraw.ui.shapes.TouchCircle;
  * Created by julienvillegas on 17/01/2017.
  */
 public class GameScreen implements Screen {
-    static final int TOLERANCE = 25;
+    static final int TOLERANCE = 35;
     private Stage stage;
     private Game game;
     private SpriteBatch spriteBatch;
