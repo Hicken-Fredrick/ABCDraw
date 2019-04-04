@@ -10,7 +10,7 @@ public class OutputEventLoop implements Realtime {
         return ourInstance;
     }
 
-    Queue<OutputGameEvent> queue = new ArrayBlockingQueue<OutputGameEvent>(20);
+    Queue<OutputGameEvent> queue = new ArrayBlockingQueue<OutputGameEvent>(500);
 
     public OutputEventLoop() {
     }

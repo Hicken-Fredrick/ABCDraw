@@ -77,7 +77,6 @@ public class GameScreen implements Screen {
             public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
                 Gdx.app.log("GameScreen", "Touch Down Registered");
                 if(checkCloseEnough(screenX, screenY)) {
-                    presenter.clearQueues();
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(screenX, screenY)));
 
@@ -100,10 +99,8 @@ public class GameScreen implements Screen {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //make sure touch is within range of position
-                //presenter.addEvent(new ScreenTouchEvent(x, y));
                 Gdx.app.log("enter drag", "ENTERING DRAG");
                 if(checkCloseEnough(x, y) && !currentLetter.isComplete()) {
-                    presenter.clearQueues();
                     //add drag circle for finger position
                     presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
 
@@ -127,7 +124,7 @@ public class GameScreen implements Screen {
                 }
 
                 else if (MainScreenModel.getInstance().getTouchCircle() != null) {
-                   presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
+                  presenter.addEvent(new ChangeDragCircle(new TouchCircle(x, y)));
                 }
                 Gdx.app.log("exit drag", "EXITING DRAG");
                 super.touchDragged(event, x, y, pointer);
