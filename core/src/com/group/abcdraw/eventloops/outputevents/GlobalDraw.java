@@ -24,7 +24,7 @@ public class GlobalDraw {
     public static void drawCircles(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         //draw all completed circles
-        shapeRenderer.setColor(Color.RED);
+        shapeRenderer.setColor(25/255f, 142/255f, 174/255f, .8f);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         List<CompleteCircle> completeCircles = MainScreenModel.getInstance().getCompleteCircles();
         for (int i = 0; i < completeCircles.size(); i++) {
@@ -54,13 +54,14 @@ public class GlobalDraw {
     public static void drawLines(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer){
         shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.BLUE);
+        shapeRenderer.setColor(218/255f, 165/255f, 32/255f, 1.0f);
         for (Line l :MainScreenModel.getInstance().getLines()) {
             shapeRenderer.line(l.getX1(), l.getY1(), l.getX2(), l.getY2());
         }
         //if touch isn't null draw from complete circle to finger
         if(MainScreenModel.getInstance().getFinalCompleteCircle() == null || MainScreenModel.getInstance().getIncompleteCircle() == null)
         {
+            Gdx.gl.glLineWidth(7);
             shapeRenderer.end();
             return;
         }
@@ -80,6 +81,7 @@ public class GlobalDraw {
                     MainScreenModel.getInstance().getIncompleteCircle().getX(),
                     MainScreenModel.getInstance().getIncompleteCircle().getY());
         }
+        Gdx.gl.glLineWidth(7);
         shapeRenderer.end();
     }
 }
