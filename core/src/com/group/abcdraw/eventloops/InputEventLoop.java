@@ -4,13 +4,8 @@ import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class InputEventLoop implements Realtime {
-    private static final InputEventLoop ourInstance = new InputEventLoop();
 
-    public static InputEventLoop getInstance() {
-        return ourInstance;
-    }
-
-    private InputEventLoop() {
+    public InputEventLoop() {
     }
 
     Queue<InputGameEvent> queue = new ArrayBlockingQueue<InputGameEvent>(20);
@@ -28,11 +23,20 @@ public class InputEventLoop implements Realtime {
         return queue.remove();
     }
 
+    public InputGameEvent peekEvent() {
+        if (queue.isEmpty()) throw new RuntimeException(" InputEventLoop Need to check queue not empty before peeking events");
+        return queue.peek();
+    }
+
     public boolean isEmpty(){
         return queue.isEmpty();
     }
 
     public void add(InputGameEvent event) {
         queue.add(event);
+    }
+
+    public void clear() {
+        queue.clear();
     }
 }

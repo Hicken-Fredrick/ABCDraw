@@ -1,7 +1,6 @@
 package com.group.abcdraw.presenters;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,31 +10,31 @@ import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
+import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
 import com.group.abcdraw.eventloops.outputevents.GlobalDraw;
+import com.group.abcdraw.eventloops.outputevents.RemoveCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.ui.background.BackgroundResource;
 
-public class MainScreenPresenter {
-    private static final MainScreenPresenter ourInstance = new MainScreenPresenter();
+public class MainScreenPresenter implements Presenter {
 
-    public static MainScreenPresenter getInstance() {
-        return ourInstance;
-    }
-
-    private MainScreenPresenter() {
+    public MainScreenPresenter() {
     }
 
     //For background disposal
-    private Texture backgroundTexture;
-    private TextureRegion mainBackground;
-    private int mainBackgroundHeight;
-    private int mainBackgroundWidth;
+    Texture backgroundTexture;
+    TextureRegion mainBackground;
+    int mainBackgroundHeight;
+    int mainBackgroundWidth;
 
-    InputEventLoop inputEventLoop = InputEventLoop.getInstance();
-    OutputEventLoop outputEventLoop = OutputEventLoop.getInstance();
+    InputEventLoop inputEventLoop = new InputEventLoop();
+    OutputEventLoop outputEventLoop = new OutputEventLoop();
 
-    public void tick(SpriteBatch spriteBatch , ShapeRenderer shapeRenderer) {
+    @Override
+    public void tick(SpriteBatch spriteBatch) {
         //Processing input events
         if(!inputEventLoop.isEmpty()) {
             Gdx.app.log("MainScreenPresenter", "Parsing input events");
@@ -57,31 +56,60 @@ public class MainScreenPresenter {
                 mainBackgroundWidth = Gdx.graphics.getWidth();
                 mainBackgroundHeight = (int) (Gdx.graphics.getWidth() * background.getRatio());
                 if (mainBackgroundHeight > Gdx.graphics.getHeight()) mainBackgroundHeight = Gdx.graphics.getHeight();
+                MainScreenModel.getInstance().setBackgroundResource(background);
             }
+            else if (outputGameEvent instanceof ChangeActiveCircle) {
+                MainScreenModel.getInstance().setIncompleteCircle(((ChangeActiveCircle) outputGameEvent).getIncompleteCircle() );
+            }
+            else if (outputGameEvent instanceof ChangeDragCircle) {
+                MainScreenModel.getInstance().setTouchCircle(((ChangeDragCircle) outputGameEvent).getTouchCircle());
+            }
+            else if (outputGameEvent instanceof AddCompleteCircle) {
+               MainScreenModel.getInstance().addCompleteCircle(((AddCompleteCircle) outputGameEvent).getCompleteCircle());
+                Gdx.app.log("Added Complete Circle","Circle at: " + ((AddCompleteCircle) outputGameEvent).getCompleteCircle().getX() + " - " + ((AddCompleteCircle) outputGameEvent).getCompleteCircle().getY());
+            }
+            else if (outputGameEvent instanceof RemoveCompleteCircle) {
+                MainScreenModel.getInstance().popCompleteCircle();
+            }
+
         }
         //Drawing background each tick
-        if (mainBackground != null) spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
-        Gdx.app.log("MainScreenPresenter", "Completed Tick");
+        if (mainBackground != null) {
+            //draw letter
+            spriteBatch.draw(mainBackground, 0, 0, mainBackgroundWidth, mainBackgroundHeight);
+            //draw points
+        }
+        //Gdx.app.log("MainScreenPresenter", "Completed Tick");
     }
 
     //For background disposal
+    @Override
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }
 
+    @Override
     public void addEvent(InputGameEvent event){
         inputEventLoop.add(event);
     }
 
+    @Override
     public void addEvent(OutputGameEvent event){
         outputEventLoop.add(event);
     }
 
     //Should be called after a sprite batch rendered
     //Otherwise there will be a black screen instead of background
+    @Override
     public void drawShapes(SpriteBatch spriteBatch, ShapeRenderer shapeRenderer) {
         GlobalDraw.drawCircles(spriteBatch, shapeRenderer);
         GlobalDraw.drawLines(spriteBatch, shapeRenderer);
+    }
+
+    @Override
+    public void clearQueues() {
+        outputEventLoop.clear();
+        inputEventLoop.clear();
     }
 }
 

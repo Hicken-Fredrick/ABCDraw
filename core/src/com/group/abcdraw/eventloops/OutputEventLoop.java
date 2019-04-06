@@ -10,9 +10,9 @@ public class OutputEventLoop implements Realtime {
         return ourInstance;
     }
 
-    Queue<OutputGameEvent> queue = new ArrayBlockingQueue<OutputGameEvent>(20);
+    Queue<OutputGameEvent> queue = new ArrayBlockingQueue<OutputGameEvent>(500);
 
-    private OutputEventLoop() {
+    public OutputEventLoop() {
     }
 
     @Override
@@ -31,5 +31,9 @@ public class OutputEventLoop implements Realtime {
 
     public void add(OutputGameEvent event) {
         queue.add(event);
+    }
+
+    public void clear() {
+        queue.clear();
     }
 }
