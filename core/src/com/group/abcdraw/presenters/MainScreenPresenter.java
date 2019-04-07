@@ -10,6 +10,7 @@ import com.group.abcdraw.eventloops.InputEventLoop;
 import com.group.abcdraw.eventloops.OutputEventLoop;
 import com.group.abcdraw.eventloops.OutputGameEvent;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.inputevents.StartAnimation;
 import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
@@ -18,7 +19,6 @@ import com.group.abcdraw.eventloops.outputevents.RemoveCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.SetBackgroundEvent;
 import com.group.abcdraw.model.MainScreenModel;
 import com.group.abcdraw.ui.background.BackgroundResource;
-
 public class MainScreenPresenter implements Presenter {
 
     public MainScreenPresenter() {
@@ -41,6 +41,9 @@ public class MainScreenPresenter implements Presenter {
             InputGameEvent inputGameEvent = inputEventLoop.getEvent();
             if (inputGameEvent instanceof ScreenTouchEvent) {
                 MainScreenModel.getInstance().addTouch(((ScreenTouchEvent) inputGameEvent).getX(), ((ScreenTouchEvent) inputGameEvent).getY());
+            }
+            else if (inputGameEvent instanceof StartAnimation) {
+                MainScreenModel.getInstance().drawBalloons();
             }
         }
 

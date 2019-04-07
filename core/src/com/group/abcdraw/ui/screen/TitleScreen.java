@@ -12,15 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.model.MainScreenModel;
+import com.group.abcdraw.ui.DrawBalloon;
 
 public class TitleScreen implements Screen {
 
     private Stage stage;
     private Game game;
+    DrawBalloon balloon;
+
 
     public TitleScreen(Game aGame) {
         game = aGame;
         stage = new Stage(new ScreenViewport());
+        balloon = new DrawBalloon();
+        balloon.create();
+        balloon.render();
 
         MainScreenModel.getInstance().setScreenHeight(Gdx.graphics.getHeight());
         MainScreenModel.getInstance().setScreenWidth(Gdx.graphics.getWidth());

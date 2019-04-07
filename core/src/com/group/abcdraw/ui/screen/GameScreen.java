@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group.abcdraw.eventloops.inputevents.ScreenTouchEvent;
+import com.group.abcdraw.eventloops.inputevents.StartAnimation;
 import com.group.abcdraw.eventloops.outputevents.AddCompleteCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeActiveCircle;
 import com.group.abcdraw.eventloops.outputevents.ChangeDragCircle;
@@ -146,6 +147,7 @@ public class GameScreen implements Screen {
 
                     //change letter and screen
                     MainScreenModel.getInstance().clear();
+                    presenter.addEvent(new StartAnimation());
                     presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
                     currentLetter = new Letter(letter);
                     Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());

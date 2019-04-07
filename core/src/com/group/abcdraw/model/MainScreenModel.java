@@ -1,5 +1,6 @@
 package com.group.abcdraw.model;
 
+import com.group.abcdraw.ui.DrawBalloon;
 import com.group.abcdraw.ui.background.BackgroundResource;
 import com.group.abcdraw.ui.shapes.CompleteCircle;
 import com.group.abcdraw.ui.shapes.IncompleteCircle;
@@ -22,6 +23,7 @@ public class MainScreenModel {
     List<Line> lines = new ArrayList<Line>();
     private float screenWidth, screenHeight;
     private BackgroundResource backgroundResource;
+    DrawBalloon balloon = new DrawBalloon();
 
     public static MainScreenModel getInstance() {
         return ourInstance;
@@ -33,8 +35,14 @@ public class MainScreenModel {
     public void clear(){
         completeCircles.clear();
         lines.clear();
+        balloon.kill();
+
     }
 
+    public void drawBalloons() {
+        balloon.create();
+        balloon.render();
+    }
     public void addTouch(float x, float y) {
         if(completeCircles.size() > 0) {
             CompleteCircle lastCompleteCircle = completeCircles.get(completeCircles.size()-1);
