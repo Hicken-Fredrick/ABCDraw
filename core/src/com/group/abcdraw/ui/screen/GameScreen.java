@@ -148,11 +148,11 @@ public class GameScreen implements Screen {
                     MainScreenModel.getInstance().clear();
                     presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
                     currentLetter = new Letter(letter);
-                    Gdx.app.log("LETTER POINTS SIZE","size: " + currentLetter.getFinalPoint());
 
                     //reset to beginning
                     Position position = currentLetter.getSpecificPoint(currentLetter.getActivePoint());
                     IncompleteCircle incompleteCircle = new IncompleteCircle(position.getX(),position.getY());
+                    Gdx.app.log("adding start at - ","X: " + position.getX() + " Y: " + position.getY());
                     presenter.addEvent(new ChangeActiveCircle(incompleteCircle));
                     presenter.addEvent(new ChangeDragCircle(null));
 

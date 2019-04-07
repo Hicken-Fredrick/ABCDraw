@@ -34,7 +34,6 @@ class LetterPoints {
                 points.add(new Position(1018, 600));
                 return points;
             case 'A':
-                points.add(new Position(886, 399));
                 points.add(new Position(246, 593));
                 points.add(new Position(444, 936));
                 points.add(new Position(717, 1249));
