@@ -61,7 +61,32 @@ public class EditorScreen implements Screen {
                 return true;
             }
         });
+
+        TextButton nextButton = new TextButton("Next",MainGame.gameSkin);
+        nextButton.setWidth(Gdx.graphics.getWidth()/2);
+        nextButton.setPosition(Gdx.graphics.getWidth()/2-nextButton.getWidth()/2,
+                Gdx.graphics.getHeight()/4-nextButton.getHeight()/2-backButton.getHeight()-backButton.getHeight()/4);
+        nextButton.addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                if(letter != 'Z') {
+                    if (letter == Character.toUpperCase(letter)){
+                        letter++;
+                        letter = Character.toLowerCase(letter);
+                    }
+                    else {
+                        letter = Character.toUpperCase(letter);
+                    }
+                    presenter.addEvent(new SetBackgroundEvent(BackgroundFactory.getInstance().getByLetter(letter)));
+                }
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
         stage.addActor(backButton);
+        stage.addActor(nextButton);
         stage.addListener(new InputListener(){
 
             @Override
